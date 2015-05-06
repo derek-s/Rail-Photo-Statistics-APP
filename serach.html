@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>搜索</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" href="css/mui.min.css">
+		<script src="js/mui.min.js"></script>
+	</head>
+
+	<body>
+		<div id="content">
+			<h5 class="mui-content-padded">搜索</h5>
+			<form class="mui-input-group">
+			<div class="mui-input-row mui-search">
+				<input type="search" class="mui-input-clear" placeholder="搜索关键词" id="s_serach">
+			</div>
+			</form>
+			<div class="button-row">
+					<button class="mui-btn mui-btn-primary mui-btn-block" onclick="serachproc()">提&nbsp;&nbsp;&nbsp;&nbsp;交</button>
+				</div>
+		</div>
+
+	<script>
+		mui.init();
+        function serachproc(){
+			localStorage.setItem('s_keyword',document.getElementById("s_serach").value);
+        	mui.openWindow({url:'results.html'});
+        
+        }
+	</script>
+	</body>
+</html>

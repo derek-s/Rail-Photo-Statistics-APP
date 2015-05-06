@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>拍车统计</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/mui.min.js"></script>
+	</head>
+
+	<body>
+		<div id="content">
+			<div id="zts">
+				目前共有
+				<p id="rows"></p> 条车辆信息
+			</div>
+
+			<div id="locomodel">
+				<div id="data">
+				</div>
+
+			</div>
+
+		</div>
+		<div id="topPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<a onclick="reloadm();">刷新数据</a>
+						</li>
+						<li class="mui-table-view-cell"><a onclick="plus.runtime.quit()">退出</a>
+						</li>
+						<li class="mui-table-view-cell"><a onclick="importbp()">备份</a>
+						</li>
+						<li class="mui-table-view-cell"><a onclick="deltable()">删除数据</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+	</body>
+
+	<script type="text/javascript" src="js/common.js"></script>
+	<script>
+		mui.init({
+			pullRefresh: {
+				container: '#locomodel',
+				up: {
+					contentrefresh: '正在加载...',
+					callback: pullupRefresh
+				}
+			}
+		});
+		sequence();
+		/*Railinfo();*/
+		mui.plusReady(function() {
+			mui('#locomodel').on('tap', '.railinfo', function(e) {
+				mui.openWindow({
+					url: 'info.html'
+				});
+				plus.storage.setItem('info_ID', this.id);
+			});
+			
+		});
+
+		function reloadm() {
+			var mainid = plus.webview.currentWebview().id;
+			var mainreload = plus.webview.getWebviewById(mainid);
+			mainreload.reload(true);
+		}
+var page = 0;
+		function pullupRefresh() {
+			setTimeout(function() {
+				var entry = localStorage.getItem('zentry');
+				mui('#locomodel').pullRefresh().endPullupToRefresh(page>entry); //参数为true代表没有更多数据了。
+
+				var db = openDatabase('Rail', '1.0', 'RailAppDB', 10 * 1024 * 1024);
+				db.transaction(function(tx) {
+					var page1 = 12;
+				tx.executeSql('SELECT * FROM Rail_locomotive LIMIT ? OFFSET ?', [page1,page], function(tx, results) {
+				var len = results.rows.length,
+				i;
+				for (i = 0; i < len; i++) {
+					var Info_ID = results.rows.item(i).id;
+				tab1 = "<div class=\"railinfo\" id=\"" + results.rows.item(i).id + "\"><div class=\"idn\">" + results.rows.item(i).id + "</div><div class=\"RinfoL\">" + results.rows.item(i).Model + "</div><div class=\"RinfoR\">" + results.rows.item(i).Locomodel + "</div><div class=\"RinfoL2\">" + results.rows.item(i).Attach + "</div><div class=\"RinfoR2\">" + results.rows.item(i).Factory + "</div><div class=\"RinfoR3\">" + results.rows.item(i).Year + "</div></div>";
+				document.querySelector('#data').innerHTML += tab1;
+			}
+				page += 12;
+		});
+	});
+			}, 2000);
+		}
+		if (mui.os.plus) {
+			mui.plusReady(function() {
+				setTimeout(function() {
+					mui('#locomodel').pullRefresh().pullupLoading();
+				}, 1000);
+			});
+		} else {
+			mui.ready(function() {
+				mui('#locomodel').pullRefresh().pullupLoading();
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>机车信息详情</title>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script>
+			mui.init()
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"><div id="title"></div></h1>
+		</header>
+		<div id="content_info">
+			<table style="width:90%;margin: auto;">
+				<tr>
+					<th colspan="2" style="text-align:center;background-color: #E3E3E3;;;">机车信息</th>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">机车型号</th>
+					<td id="Model"></td>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">机车类型</th>
+					<td id="Locomodel"></td>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">运用类型</th>
+					<td id="Type"></td>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">UIC标准轴式</th>
+					<td id="UIC"></td>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">供电制式</th>
+					<td id="Power"></td>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">传动模式</th>
+					<td id="Drive"></td>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">配属局段</th>
+					<td id="Attach"></td>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">生产厂商</th>
+					<td id="Factory"></td>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">生产年份</th>
+					<td id="Year"></td>
+				</tr>
+				<tr>
+					<th colspan="2" style="text-align:center;background-color: #E3E3E3;;;">运行信息</th>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">牵引车次</th>
+					<td id="Number"></td>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">运行区间</th>
+					<td id="Section"></td>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">车底配属</th>
+					<td id="Ub"></td>
+				</tr>
+				<tr>
+					<th colspan="2" style="text-align:center;background-color: #E3E3E3;;;">拍摄信息</th>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">拍摄地点</th>
+					<td id="Location"></td>
+				</tr>
+				<tr>
+					<th scope="row" style="text-align:left;;;">拍摄时间</th>
+					<td id="Data"></td>
+				</tr>
+			</table>
+		</div>
+	</body>
+	<script>
+	mui.plusReady(function(){
+           function infoload() {
+			var info_id = plus.storage.getItem('info_ID');
+			var db = openDatabase('Rail', '1.0', 'RailAppDB', 10 * 1024 * 1024);
+			db.transaction(function(tx) {
+				tx.executeSql('SELECT * FROM Rail_locomotive WHERE id = ?', [info_id], function(tx, results) {
+					var len = results.rows.length,
+						i;
+					for (i = 0; i < len; i++) {
+						document.querySelector('#title').innerHTML = results.rows.item(i).Model;
+						document.querySelector('#Model').innerHTML = results.rows.item(i).Model;
+						document.querySelector('#Locomodel').innerHTML = results.rows.item(i).Locomodel;
+						document.querySelector('#Type').innerHTML = results.rows.item(i).Type;
+						document.querySelector('#UIC').innerHTML = results.rows.item(i).UIC;
+						document.querySelector('#Power').innerHTML = results.rows.item(i).Power;
+						document.querySelector('#Attach').innerHTML = results.rows.item(i).Attach;
+						document.querySelector('#Factory').innerHTML = results.rows.item(i).Factory;
+						document.querySelector('#Year').innerHTML = results.rows.item(i).Year;
+						document.querySelector('#Number').innerHTML = results.rows.item(i).Number;
+						document.querySelector('#Section').innerHTML = results.rows.item(i).Section;
+						document.querySelector('#Ub').innerHTML = results.rows.item(i).Ub;
+						document.querySelector('#Location').innerHTML = results.rows.item(i).Location;
+						document.querySelector('#Data').innerHTML = results.rows.item(i).Data;
+						document.querySelector('#Drive').innerHTML = results.rows.item(i).Drive;
+					}
+				});
+			});
+		}
+		infoload();
+        });
+		 mui.back = function () {
+        // 其他额外工作
+        var infoid = plus.webview.currentWebview();
+        plus.webview.close(infoid);
+		 };
+	</script>
+
+</html>
