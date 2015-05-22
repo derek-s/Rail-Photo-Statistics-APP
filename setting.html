@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>设置</title>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			mui.init()
+		</script>
+	</head>
+
+	<body>
+		<div id="content">
+			
+			
+			<h5 class="mui-content-padded">本APP相关信息:</h5>
+				<div class="settingrows">当前程序版本：<p style="color: red;">Bata 2</p></div>
+				<h5 class="mui-content-padded">安装位置</h5>
+				<div id="installpath"></div>
+				<h5 class="mui-content-padded">备份文件位置</h5>
+				<div id="csvpath"></div>
+				<h5 class="mui-content-padded">备份文件大小</h5>
+				<div class="settingrows"><div id="sizes"></div></div>
+				<h5 class="mui-content-padded">数据库信息:</h5>
+				<div class="settingrows">当前共有<div id="rows"></div>行数据</div>
+			<h5 class="mui-content-padded">数据备份恢复:</h5>
+			<div class="button-set">
+					<button class="mui-btn mui-btn-primary" style="width:80%;margin: auto;margin-top: 10px;" onclick="backup()">备&nbsp;份&nbsp;数&nbsp;据</button>
+					<button class="mui-btn mui-btn-primary" style="width:80%;margin: auto;margin-top: 10px;" onclick="importbp()">恢&nbsp;复&nbsp;数&nbsp;据</button>
+				</div>
+			<h5 class="mui-content-padded">删除全部数据:</h5>
+			<div class="settingrows"><p style="color: red;">危险操作，请谨慎。</p></div>
+			<div class="button-set">
+					<button id='confirmBtn' class="mui-btn mui-btn-primary" style="width:80%;margin: auto;margin-top: 10px;" onclick="deltable()">删&nbsp;除&nbsp;数&nbsp;据</button>
+				</div>
+				<h5 class="mui-content-padded">退出应用:</h5>
+			<div class="button-set" style="padding-bottom:15px;">
+					<button id='confirmBtn' class="mui-btn mui-btn-primary mui-btn-negative" style="width:80%;margin: auto;margin-top: 10px;" onclick="plus.runtime.quit()">退&nbsp;出</button>
+				</div>
+				
+		</div>
+	</body>
+	<script>
+	sequence();
+	mui.plusReady(function(){
+	plus.io.requestFileSystem(plus.io.PUBLIC_DOCUMENTS, function(fs) {
+		fs.root.getFile('backup.json', {
+				create: false
+			}, function(fileEntry) {
+				csvpath =  fileEntry.fullPath;
+				fileEntry.getMetadata(function(filesize){
+					size = filesize.size/(1024*1024);
+					disize = size.toFixed(2)+'MB';
+					document.querySelector('#sizes').innerHTML = disize;
+				},function(){
+					document.querySelector('#sizes').innerHTML = '0MB';
+				})
+				document.querySelector('#csvpath').innerHTML = csvpath;
+			});
+		})
+	plus.io.requestFileSystem(plus.io.PRIVATE_WWW, function(fs) {
+		fs.root.getFile('index.html', {
+				create: false
+			}, function(fileEntry) {
+				installpath =  fileEntry.fullPath;
+				console.log(installpath);
+				document.querySelector('#installpath').innerHTML = installpath;
+			});
+		})
+	});
+	</script>
+
+</html>

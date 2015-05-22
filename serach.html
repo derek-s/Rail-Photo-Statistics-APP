@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>搜索</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" href="css/mui.min.css">
+		<script src="js/mui.min.js"></script>
+	</head>
+
+	<body>
+		<div id="content">
+			<h5 class="mui-content-padded">搜索</h5>
+			<form onsubmit="r_serach()" target="id_iframe">
+				<div class="mui-input-row mui-search">
+					<input name="serach" type="search" class="mui-input-clear" placeholder="搜索关键词" id="s_serach">
+				</div>
+			</form>
+			<h5 class="mui-content-padded">搜索结果</h5>
+				<div id="resultstable"></div>
+
+			<iframe id="id_iframe" name="id_iframe" style="display: none;"></iframe>
+		</div>
+		</div>
+
+		<script>
+			mui.init();
+
+			function r_serach() {
+				var word = document.getElementById("s_serach").value /*plus.storage.getItem('keyword')*/ ;
+				var r_keyword = '"%' + word + '%"'
+				var db = openDatabase('Rail', '1.0', 'RailAppDB', 10 * 1024 * 1024);
+				db.transaction(function(tx) {
+					tx.executeSql('SELECT * FROM Rail_locomotive  WHERE Model LIKE (' + r_keyword + ') OR Locomodel LIKE (' + r_keyword + ') OR Type LIKE (' + r_keyword + ') OR UIC LIKE (' + r_keyword + ') OR Power LIKE (' + r_keyword + ') OR Drive LIKE (' + r_keyword + ') OR Attach LIKE (' + r_keyword + ') OR Factory LIKE (' + r_keyword + ') OR Year LIKE (' + r_keyword + ') OR Number LIKE (' + r_keyword + ') OR Section LIKE (' + r_keyword + ') OR Ub LIKE (' + r_keyword + ') OR Location LIKE (' + r_keyword + ') OR Data LIKE (' + r_keyword + ')  ', [], function(tx, results) {
+						var len = results.rows.length,
+							i;
+						console.log(len)
+						if (len == 0) {
+							sch1 = "没有搜索到您搜索的信息";
+							document.querySelector('#resultstable').innerHTML += sch1;
+						}
+						for (i = 0; i < len; i++) {
+							var Info_ID = results.rows.item(i).id;
+							sch1 = "<div class=\"railinfo mui-table-view-cell\" id=\"" + results.rows.item(i).id + "\"><div class=\"idn\">" + results.rows.item(i).id + "</div><div class=\"RinfoL\">" + results.rows.item(i).Model + "</div><div class=\"RinfoR\">" + results.rows.item(i).Locomodel + "</div><div class=\"RinfoL2\">" + results.rows.item(i).Attach + "</div><div class=\"RinfoR2\">" + results.rows.item(i).Factory + "</div><div class=\"RinfoR3\">" + results.rows.item(i).Year + "</div></div>";
+							document.querySelector('#resultstable').innerHTML += sch1;
+						}
+					});
+				});
+			}
+			mui.plusReady(function() {
+			mui('#resultstable').on('tap', '.railinfo', function(e) {
+				mui.openWindow({
+					url: 'info.html'
+				});
+				plus.storage.setItem('info_ID', this.id);
+				
+			});
+			
+		});
+		</script>
+	</body>
+
+</html>

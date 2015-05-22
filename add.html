@@ -1,0 +1,178 @@
+<!--
+        	作者：derekseli@outlook.com
+        	时间：2015-04-16
+        	描述：新增机车页面
+        -->
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>新增车辆</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" href="css/mui.min.css">
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+	</head>
+
+	<body>
+		<div id="content">
+			<h5 class="mui-content-padded">机车信息</h5>
+			<div class="mui-content-padded">
+				<h5 class="mui-content-padded">基础信息</h5>
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>机车型号</label>
+						<input type="text" class="mui-input-clear" placeholder="例如：东风4D" name="model" id="i_Model">
+					</div>
+					<div class="mui-input-row">
+						<label>机车类型</label>
+						<input type="text" class="mui-input-clear" placeholder="例如：内燃机车" name="locomodel" id="i_Locomodel">
+					</div>
+					<div class="mui-input-row">
+						<label>UIC标准轴式</label>
+						<input type="text" class="mui-input-clear" placeholder="例如：Co-Co" name="UIC" id="i_UIC">
+					</div>
+					<div class="mui-input-row">
+						<label>供电制式</label>
+						<input type="text" class="mui-input-clear" placeholder="例如：DC600V" name="power" id="i_Power">
+					</div>
+					<div class="mui-input-row">
+						<label>传动模式</label>
+						<input type="text" class="mui-input-clear" placeholder="例如：交流电传动" name="drive" id="i_Drive">
+					</div>
+					<div class="mui-input-row">
+						<label>配属局段</label>
+						<input type="text" class="mui-input-clear" placeholder="例如：哈局哈段" name="attach" id="i_Attach">
+					</div>
+					<div class="mui-input-row">
+						<label>生产厂商</label>
+						<input type="text" class="mui-input-clear" placeholder="例如：北车大连机车厂" name="factory" id="i_Factory">
+					</div>
+					<div class="mui-input-row">
+						<label>生产年份</label>
+						<input type="text" class="mui-input-clear" placeholder="例如：1999" name="year" id="i_Year">
+					</div>
+				</form>
+				<h5 class="mui-content-padded">运用类型</h5>
+				<div class="mui-card">
+					<form class="mui-input-group" name="form_type" id="form_type">
+						<div class="mui-input-row mui-radio">
+							<label>货运</label>
+							<input name="radio1" type="radio" value="货运">
+						</div>
+						<div class="mui-input-row mui-radio">
+							<label>客运</label>
+							<input name="radio1" type="radio" value="客运" checked>
+						</div>
+						<div class="mui-input-row mui-radio">
+							<label>调机</label>
+							<input name="radio1" type="radio" value="调机">
+						</div>
+						<div class="mui-input-row mui-radio">
+							<label>客货通用</label>
+							<input name="radio1" type="radio" value="客货通用">
+						</div>
+						<div class="mui-input-row mui-radio">
+							<label>工程救援</label>
+							<input name="radio1" type="radio" value="工程救援">
+						</div>
+						<div class="mui-input-row mui-radio">
+							<label>其他</label>
+							<input name="radio1" type="radio" value="其他">
+						</div>
+					</form>
+				</div>
+			</div>
+			<h5 class="mui-content-padded">运行信息</h5>
+			<div class="mui-content-padded">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>牵引车次</label>
+						<input type="text" class="mui-input-clear" placeholder="例如：K40" name="number" id="i_Number">
+					</div>
+					<div class="mui-input-row">
+						<label>运行区间</label>
+						<input type="text" class="mui-input-clear" placeholder="例如：海拉尔-北京" name="section" id="i_Section">
+					</div>
+					<div class="mui-input-row">
+						<label>车底配属</label>
+						<input type="text" class="mui-input-clear" placeholder="例如：哈局齐北段25G" name="ub" id="i_Ub">
+					</div>
+				</form>
+			</div>
+			<h5 class="mui-content-padded">拍摄信息</h5>
+			<div class="mui-content-padded">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>拍摄地点</label>
+						<input type="text" class="mui-input-clear" placeholder="例如：海拉尔火车站" name="location" id="i_Location">
+					</div>
+					<div class="mui-input-row">
+						<label>拍摄日期</label>
+						<p id="i_Data"></p>
+						</input>
+					</div>
+				</form>
+				<div>
+					<button onclick="pickDate()" class="button">选择日期</button>
+				</div>
+				
+			</div>
+			<h5 class="mui-content-padded">备注信息</h5>
+			<div class="mui-content-padded">
+				<form class="mui-input-group">
+					<div class="mui-input-row" style="margin: 10px 5px;position: static;height: auto;">
+					<textarea id="i_Remark" rows="5" placeholder="备注信息" style="margin-top: 5px;border: 1px solid rgba(0,0,0,.2);border-radius: 3px;;"></textarea>
+				</div>
+			<div class="button-row">
+					<button class="mui-btn mui-btn-primary mui-btn-block" onclick="addRail()" style="width:100% !important;">提&nbsp;&nbsp;&nbsp;&nbsp;交</button>
+				</div>
+		</div></div>
+	</body>
+	<script type="text/javascript">
+		window.picdata = "";
+
+		function pickDate() {
+			plus.nativeUI.pickDate(function(e) {
+				var d = e.date;
+				window.picdata = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+				document.getElementById("i_Data").innerHTML = picdata;
+			}, function(e) {
+				alert("未选择日期");
+			});
+		}
+
+		function addRail() {
+			var form_name = document.getElementById('form_type');
+			for (var i = 0; i < form_name.radio1.length; i++) {
+				if (form_name.radio1[i].checked) {
+					window.find_type = form_name.radio1[i].value;
+					break;
+				}
+			}
+			sessionStorage.setItem('s_Model', document.getElementById("i_Model").value);
+			sessionStorage.setItem('s_UIC', document.getElementById("i_UIC").value);
+			sessionStorage.setItem('s_Power', document.getElementById("i_Power").value);
+			sessionStorage.setItem('s_Drive', document.getElementById("i_Drive").value);
+			sessionStorage.setItem('s_Attach', document.getElementById("i_Attach").value);
+			sessionStorage.setItem('s_Factory', document.getElementById("i_Factory").value);
+			sessionStorage.setItem('s_Year', document.getElementById("i_Year").value);
+			sessionStorage.setItem('s_Type', find_type);
+			sessionStorage.setItem('s_Number', document.getElementById("i_Number").value);
+			sessionStorage.setItem('s_Section', document.getElementById("i_Section").value);
+			sessionStorage.setItem('s_Ub', document.getElementById("i_Ub").value);
+			sessionStorage.setItem('s_Location', document.getElementById("i_Location").value);
+			sessionStorage.setItem('s_Data', picdata);
+			sessionStorage.setItem('s_Locomodel', document.getElementById('i_Locomodel').value);
+			sessionStorage.setItem('s_Remark', document.getElementById('i_Remark').value);
+			if (window.picdata == "") {
+				alert("未选择日期");
+			} else {
+				addproc();
+			}
+		}
+	</script>
+
+</html>
