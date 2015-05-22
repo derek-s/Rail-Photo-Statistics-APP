@@ -118,45 +118,22 @@
 				<div>
 					<button onclick="pickDate()" class="button">选择日期</button>
 				</div>
-				<div class="button-row">
-					<button class="mui-btn mui-btn-primary mui-btn-block" onclick="addRail()">提&nbsp;&nbsp;&nbsp;&nbsp;交</button>
-				</div>
+				
 			</div>
-		</div>
-		<div id="topPopover" class="mui-popover">
-			<div class="mui-popover-arrow"></div>
-			<div class="mui-scroll-wrapper">
-				<div class="mui-scroll">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell">
-							<a href="#">Item1</a>
-						</li>
-						<li class="mui-table-view-cell"><a href="#">Item2</a>
-						</li>
-						<li class="mui-table-view-cell"><a href="#">Item3</a>
-						</li>
-						<li class="mui-table-view-cell"><a href="#">Item4</a>
-						</li>
-						<li class="mui-table-view-cell"><a href="#">Item5</a>
-						</li>
-						<li class="mui-table-view-cell"><a href="#">Item6</a>
-						</li>
-						<li class="mui-table-view-cell"><a href="#">Item7</a>
-						</li>
-						<li class="mui-table-view-cell"><a href="#">Item8</a>
-						</li>
-						<li class="mui-table-view-cell"><a href="#">Item9</a>
-						</li>
-						<li class="mui-table-view-cell"><a href="#">Item10</a>
-						</li>
-					</ul>
+			<h5 class="mui-content-padded">备注信息</h5>
+			<div class="mui-content-padded">
+				<form class="mui-input-group">
+					<div class="mui-input-row" style="margin: 10px 5px;position: static;height: auto;">
+					<textarea id="i_Remark" rows="5" placeholder="备注信息" style="margin-top: 5px;border: 1px solid rgba(0,0,0,.2);border-radius: 3px;;"></textarea>
 				</div>
-			</div>
-
-		</div>
+			<div class="button-row">
+					<button class="mui-btn mui-btn-primary mui-btn-block" onclick="addRail()" style="width:100% !important;">提&nbsp;&nbsp;&nbsp;&nbsp;交</button>
+				</div>
+		</div></div>
 	</body>
 	<script type="text/javascript">
-		window.picdata="";
+		window.picdata = "";
+
 		function pickDate() {
 			plus.nativeUI.pickDate(function(e) {
 				var d = e.date;
@@ -189,13 +166,13 @@
 			sessionStorage.setItem('s_Location', document.getElementById("i_Location").value);
 			sessionStorage.setItem('s_Data', picdata);
 			sessionStorage.setItem('s_Locomodel', document.getElementById('i_Locomodel').value);
-			if(window.picdata==""){
+			sessionStorage.setItem('s_Remark', document.getElementById('i_Remark').value);
+			if (window.picdata == "") {
 				alert("未选择日期");
-			}else{addproc();}
-		
-			
+			} else {
+				addproc();
+			}
 		}
 	</script>
-	
 
 </html>

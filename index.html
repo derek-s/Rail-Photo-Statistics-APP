@@ -13,13 +13,12 @@
 	<body>
 		<div class="mui-loader">加载中...</div>
 		<header class="mui-bar mui-bar-nav">
-			<a id="classMenu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right"></a>
 			<h1 id="title" class="mui-title">拍车统计</h1>
 		</header>
 
 		<nav class="mui-bar mui-bar-tab">
 			<a id="defaultTab" class="mui-tab-item mui-active" href="main.html">
-				<span class="mui-tab-label">首页</span>
+				<span class="mui-tab-label">拍车统计</span>
 			</a>
 			<a class="mui-tab-item" href="add.html">
 				<span class="mui-tab-label">新增机车</span>
@@ -27,9 +26,13 @@
 			<a class="mui-tab-item" href="serach.html">
 				<span class="mui-tab-label">搜索</span>
 			</a>
+			<a class="mui-tab-item" href="setting.html">
+				<span class="mui-tab-label">设置</span>
+			</a>
 		</nav>
 		<script type="text/javascript" charset="utf-8">
-			var subpages = ['main.html', 'add.html', 'serach.html'];
+			var subpages = ['main.html', 'add.html', 'serach.html','setting.html'];
+			var subpagesid= ['main','add','serach','setting']
 			var subpage_style = {
 				top: '46px',
 				bottom: '50px'
@@ -74,10 +77,6 @@
 					current.classList.remove('mui-active');
 					defaultTab.classList.add('mui-active');
 				}
-			});
-			document.getElementById('classMenu').addEventListener('tap', function() {
-				plus.webview.getWebviewById('main.html').evalJS('mui("#topPopover").popover("toggle")');
-				plus.webview.getWebviewById('add.html').evalJS('mui("#topPopover").popover("toggle")');
 			});
 		</script>
 	</body>

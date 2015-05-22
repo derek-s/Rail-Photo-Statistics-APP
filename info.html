@@ -84,6 +84,10 @@
 					<th scope="row" style="text-align:left;;;">拍摄时间</th>
 					<td id="Data"></td>
 				</tr>
+				<tr>
+					<th colspan="2" style="text-align:center;background-color: #E3E3E3;;;">备注信息</th>
+				</tr>
+				<td id="Remark" colspan="2" style="text-align: left;"></td>
 			</table>
 		</div>
 	</body>
@@ -112,6 +116,7 @@
 						document.querySelector('#Location').innerHTML = results.rows.item(i).Location;
 						document.querySelector('#Data').innerHTML = results.rows.item(i).Data;
 						document.querySelector('#Drive').innerHTML = results.rows.item(i).Drive;
+						document.querySelector('#Remark').innerHTML = results.rows.item(i).Remark;
 					}
 				});
 			});
